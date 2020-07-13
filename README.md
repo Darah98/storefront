@@ -1,4 +1,4 @@
-# LAB - Class 36
+# LAB - Class 37
 
 ## Project: Storefront
 
@@ -6,7 +6,7 @@
 
 ### Links and Resources
 
-- [submission PR](https://github.com/darah98/storefront/pull/1)
+- [submission PR](https://github.com/darah98/storefront/pull/2)
 
 ### Setup
 
