@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 450,
+    maxWidth: 300,
     width: 100 + '%',
 
   },

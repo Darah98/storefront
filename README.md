@@ -16,4 +16,4 @@
 
 #### UML
 
-![uml](uml-lab36.png)
+![uml](uml-lab37.png)
