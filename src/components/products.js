@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { getProductsData } from '../store/api.js';
+import { deleteProduct } from '../store/api.js';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -95,11 +97,34 @@ const useStyles = makeStyles((theme) => ({
 
 
 function Products(props) {
-  const classes = useStyles();
+  const fetchData = () =>{
+    props.get();
+  };
+  const clickHandler=(product)=>{
+    props.addToCart(product);
+    if(product.inStock===1){
+      props.delete(product);
+    }
+  };
+  
+  
+  useEffect(()=>{
+    fetchData();
+    // console.log(props.api);
+    // props.products.results.map((item)=>{
+    //   console.log(item);
+    //   return item;
+    // });
+  }, []);
 
+  const classes = useStyles();
   return (
     <>
-
+      {/* <ul>
+        {props.products.results.map((product)=>(
+          <li key={product._id}>{product.display_name}</li>
+        ))}
+      </ul> */}
       <section className={classes.section1}>
 
         <div className={classes.div}>
@@ -110,7 +135,7 @@ function Products(props) {
 
         <section className={classes.section}>
           {
-            props.products.map((product) => (
+            props.products.results.map((product) => (
               product.category === props.categories.activeCategory ?
 
                 <Card key={product.name} className={classes.root}>
@@ -136,10 +161,8 @@ function Products(props) {
                     variant="contained"
                     color="primary"
                     style={{ width: 100 + '%' }}
-                    onClick={() => {
-                      props.addToCart(product);
-                    }
-                    }>
+                    onClick={() => {clickHandler(product);}}
+                  >
                                         ADD TO CART
                   </Button>
 
@@ -177,10 +200,14 @@ function Products(props) {
 
 
 const mapStateToProps = (state) => {
-  return { products: state.products, categories: state.categories, cart: state.cart };
+  return { products: state.products, categories: state.categories, cart: state.cart};
 };
 
-const mapDispatchToProps = { addToCart };
+const mapDispatchToProps = (dispatch)=>({
+  addToCart: (product)=> dispatch(addToCart(product)),
+  get: ()=> dispatch(getProductsData()),
+  delete: (product)=> dispatch(deleteProduct(product)),
+});
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Products);
