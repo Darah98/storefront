@@ -1,6 +1,6 @@
 import superagent from 'superagent';
 const api= 'https://authenticated-api-darah.herokuapp.com/api/v1';
-const token= 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRvbWEiLCJjYXBhYmlsaXRpZXMiOlsicmVhZCIsImNyZWF0ZSIsInVwZGF0ZSIsImRlbGV0ZSJdLCJpYXQiOjE1OTQ3NjY1NjAsImV4cCI6MTU5NDc2NzQ2MH0.25ewRhZnUxiRz3aMvpk8trMUYaijDD4vuFE-XXRSJHc';
+const token= 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNoYWxhYmkiLCJjYXBhYmlsaXRpZXMiOlsicmVhZCIsImNyZWF0ZSIsInVwZGF0ZSIsImRlbGV0ZSJdLCJpYXQiOjE1OTQ4Mzg1MTV9.lxX-Z2KjvbOs_mK-wPo_mi9DvfaiQIaq394GBJYruww';
 // const initialState={ results: [] };
 
 // export default (state = initialState, action) => {
@@ -14,7 +14,13 @@ const token= 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRvbWEiLCJjY
 //     return state;
 //   }
 // };
-
+export const getCategories = function () {
+  return (dispatch) => {
+    return superagent.get(`${api}/categories`).then((response) => {
+      dispatch(getCatAction({ results: response.body }));
+    });
+  };
+};
 export const getProductsData = function () {
   return (dispatch) => {
     return superagent.get(`${api}/products`).then((response) => {
@@ -31,6 +37,12 @@ export const deleteProduct = function (product) {
       });
       // dispatch(deleteAction({results: response.body}));
     });
+  };
+};
+export const getCatAction = (payload)=>{
+  return {
+    type: 'GETCAT',
+    payload: payload,
   };
 };
 export const getAction = (payload)=>{

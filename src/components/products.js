@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 300,
     width: 100 + '%',
-
+    marginBottom: '5%',
   },
   media: {
     height: 0,
@@ -41,19 +41,21 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '5%',
     display: 'flex',
     justifyContent: 'space-around',
-
+    flexWrap: 'wrap',
   },
   div: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '10vh',
+    height: '190px',
     fontSize: 'xx-large',
     marginBottom: '0',
     fontFamily: 'sans-serif',
     color: '#3f51b5',
     backgroundColor: '#00000008',
     textShadow: '1px 1px 4px #595757',
+    flexDirection: 'column',
+    // height: '190px',
   },
   cart: {
     backgroundColor: '#f7f7f7',
@@ -92,14 +94,17 @@ const useStyles = makeStyles((theme) => ({
     color: '#161e49',
     boxShadow: '0px -2px 8px 2px #4f5ca1',
   },
+  ph: {
+    margin: '0',
+  },
 }));
 
 
 
 function Products(props) {
-  const fetchData = () =>{
-    props.get();
-  };
+  // const fetchData = () =>{
+  //   props.get();
+  // };
   const clickHandler=(product)=>{
     props.addToCart(product);
     if(product.inStock===1){
@@ -109,7 +114,8 @@ function Products(props) {
   
   
   useEffect(()=>{
-    fetchData();
+    props.get();
+    // fetchData();
     // console.log(props.api);
     // props.products.results.map((item)=>{
     //   console.log(item);
@@ -128,9 +134,16 @@ function Products(props) {
       <section className={classes.section1}>
 
         <div className={classes.div}>
-          <h1>
+          <h1 className={classes.ph}>
             {props.categories.activeCategory.toUpperCase()}
           </h1>
+          <p className={classes.ph}>{props.categories.categories.map((category)=>{
+            return category.name === props.categories.activeCategory ?
+              category.description
+              : 
+              null;
+          })
+          }</p>
         </div>
 
         <section className={classes.section}>
@@ -138,14 +151,14 @@ function Products(props) {
             props.products.results.map((product) => (
               product.category === props.categories.activeCategory ?
 
-                <Card key={product.name} className={classes.root}>
+                <Card key={product._id} className={classes.root}>
                   <CardHeader
                     avatar={
                       <Avatar aria-label="recipe" className={classes.avatar}>
                         {product.category[0].toUpperCase()}
                       </Avatar>
                     }
-                    title={product.name}
+                    title={product.display_name}
                     subheader={product.category}
                   />
                   <CardMedia
