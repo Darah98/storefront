@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { changeActiveCategory } from '../store/categories.js';
+import {getCategories} from '../store/api.js';
 import {AppBar, Tabs, Tab} from '@material-ui/core';
 
 function Categories(props) {
+  useEffect(()=>{
+    props.getCat();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
         
     <section>
@@ -12,8 +17,8 @@ function Categories(props) {
           {
             props.categories.categories.map((category) => {
               return (
-                <Tab label={category.displayName} key={category.name} onClick={() => props.changeActiveCategory(category.name)}>
-                  {category.displayName}
+                <Tab label={category.display_name} key={category._id} onClick={() => props.change(category.name)}>
+                  {category.display_name}
                 </Tab>
               );
             })
@@ -28,6 +33,9 @@ const mapStateToProps = (state) => {
   return { categories: state.categories };
 };
 
-const mapDispatchToProps = { changeActiveCategory };
+const mapDispatchToProps = (dispatch)=> ({
+  change: (catName)=> dispatch(changeActiveCategory(catName)),
+  getCat: ()=> dispatch(getCategories()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Categories);

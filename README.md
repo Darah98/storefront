@@ -6,7 +6,7 @@
 
 ### Links and Resources
 
-- [submission PR](https://github.com/darah98/storefront/pull/2)
+- [submission PR](https://github.com/darah98/storefront/pull/3)
 
 ### Setup
 
